@@ -1,5 +1,5 @@
 // signer
-package main
+package PrcIdSigner
 
 import (
 	"bytes"
@@ -28,35 +28,16 @@ func SignPubKeyPKS(asciiPub string, asciiPri string, pripwd string) (asciiSigned
 	//prcPubEnt
 	fmt.Println(usrIdstring)
 	myConf := &packet.Config{DefaultHash: crypto.SHA1}
-
 	errSign := prcPubEnt.PRCSignIdentity(usrIdstring, prcPriEnt, myConf)
-
 	if errSign != nil {
-		fmt.Println("Signing Key ", errSign.Error())
 		return
 	}
-	fmt.Println("Signed PubEnt ", pubEnt)
 	idnts := pubEnt.Identities
 	for _, sss := range idnts {
 		for _, srq := range sss.Signatures {
-			fmt.Println("Signed PubEnt Signature ", srq)
-			/*
-						signedPubKey, _ := getPub(Prc_pks_signed_key)
-				//			signee_key, _ := getPub(Pks_pub_key)
-
-				err1 := signee_key.VerifyKeySignature(&signedPubKey, srq)
-				if err1 != nil {
-					fmt.Println("Verify Key ", err1.Error())
-				} else {
-					fmt.Println("Key Verified ")
-				}
-			*/
 			asciiSignedKey = PubEntToAsciiArmor(pubEnt)
 		}
 	}
-
-	fmt.Println("\nSigned Pub Key", pubEnt.PrimaryKey)
-
 	return
 }
 
@@ -65,11 +46,9 @@ func getPub(asciiPub string) (pubKey packet.PublicKey, retEntity openpgp.Entity)
 	read1 := bytes.NewReader([]byte(asciiPub))
 	entityList, errReadArm := openpgp.ReadArmoredKeyRing(read1)
 	if errReadArm != nil {
-		fmt.Println("Reading Pubkey ", errReadArm.Error())
 		return
 	}
 	for _, pubKeyEntity := range entityList {
-		fmt.Println("PubEnt", pubKeyEntity)
 		if pubKeyEntity.PrimaryKey != nil {
 			pubKey = *pubKeyEntity.PrimaryKey
 			retEntity = *pubKeyEntity
@@ -78,12 +57,6 @@ func getPub(asciiPub string) (pubKey packet.PublicKey, retEntity openpgp.Entity)
 	}
 
 	idnts := retEntity.Identities
-	for _, sss := range idnts {
-		for _, srq := range sss.Signatures {
-			fmt.Println("PubEnt Signature ", srq)
-		}
-	}
-	fmt.Println("PubKey ", pubKey)
 	return
 }
 
@@ -113,8 +86,7 @@ func getPri(asciiPri string, pripwd string) (priKey packet.PrivateKey, priEnt op
 		retEntity.PrivateKey = &priKey
 		priEnt = *retEntity
 	}
-	fmt.Println("PriKeyEntity ", priEnt)
-	fmt.Println("PriKey ", priKey)
+
 	return
 }
 

@@ -3,4 +3,4 @@
 /*
 gpgSigner document
 */
-package main
+package PrcIdSigner

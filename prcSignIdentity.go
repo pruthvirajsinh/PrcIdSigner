@@ -1,6 +1,6 @@
 // prcSignIdentity
 
-package main
+package PrcIdSigner
 
 import (
 	. "code.google.com/p/go.crypto/openpgp"
