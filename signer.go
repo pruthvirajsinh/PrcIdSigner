@@ -10,7 +10,7 @@ import (
 	"errors"
 )
 
-// This function takes asciiarmored private key which will sign the public key
+//SignPubKeyPKS takes asciiarmored private key which will sign the public key
 //Public key is also ascii armored,pripwd is password of private key in string
 //This function will return ascii armored signed public key i.e. (pubkey+sign by prikey)
 //If lifeTime==0 then signature doesnt expire
@@ -51,7 +51,7 @@ func SignPubKeyPKS(asciiPub string, asciiPri string, pripwd string, lifeTime uin
 	return
 }
 
-//get packet.PublicKey and openpgp.Entity of Public Key from ascii armor
+//GetPub gets packet.PublicKey and openpgp.Entity of Public Key from ascii armor
 func GetPub(asciiPub string) (pubKey packet.PublicKey, retEntity openpgp.Entity, err error) {
 	read1 := bytes.NewReader([]byte(asciiPub))
 	entityList, errReadArm := openpgp.ReadArmoredKeyRing(read1)
@@ -69,7 +69,7 @@ func GetPub(asciiPub string) (pubKey packet.PublicKey, retEntity openpgp.Entity,
 	return
 }
 
-//get packet.PrivateKEy and openpgp.Entity of Decrypted Private Key from ascii armor
+//GetPri gets packet.PrivateKEy and openpgp.Entity of Decrypted Private Key from ascii armor
 func GetPri(asciiPri string, pripwd string) (priKey packet.PrivateKey, priEnt openpgp.Entity, err error) {
 	read1 := bytes.NewReader([]byte(asciiPri))
 	entityList, errReadArm := openpgp.ReadArmoredKeyRing(read1)
@@ -102,7 +102,7 @@ func GetPri(asciiPri string, pripwd string) (priKey packet.PrivateKey, priEnt op
 	return
 }
 
-//Create ASscii Armor from openpgp.Entity
+//PubEntToAsciiArmor creates ASscii Armor from pubEnt of type openpgp.Entity
 func PubEntToAsciiArmor(pubEnt openpgp.Entity) (asciiEntity string, err error) {
 	gotWriter := bytes.NewBuffer(nil)
 	wr, errEncode := armor.Encode(gotWriter, openpgp.PublicKeyType, nil)
