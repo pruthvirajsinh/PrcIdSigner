@@ -16,8 +16,8 @@ type prcEntity struct {
 // e.Identities and the private key of signer must have been decrypted if
 // necessary.
 // If config is nil, sensible defaults will be used.
-//XXX NOTE PRC: it is custom implementation based on patch provided to resolve issue no. 7371
-//https://code.google.com/p/go/issues/detail?id=7371
+// Note:It is custom implementation based on patch provided to resolve issue no. 7371
+// https://code.google.com/p/go/issues/detail?id=7371
 func (e prcEntity) PRCSignIdentity(identity string, signer prcEntity, config *packet.Config) error {
 	if signer.PrivateKey == nil {
 		return errors.InvalidArgumentError("signing Entity must have a private key")
