@@ -1,4 +1,3 @@
-// signer
 package PrcIdSigner
 
 import (
