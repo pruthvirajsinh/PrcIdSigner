@@ -7,18 +7,14 @@ import (
 	"log"
 )
 
-type prcEntity struct {
-	*Entity
-}
-
 // PRCSignIdentity adds a signature to e, from signer, attesting that identity is
 // associated with e. The provided identity must already be an element of
 // e.Identities and the private key of signer must have been decrypted if
 // necessary.
 // If config is nil, sensible defaults will be used.
 // Note:It is custom implementation based on patch provided to resolve issue no. 7371
-// https://code.google.com/p/go/issues/detail?id=7371
-func (e prcEntity) PRCSignIdentity(identity string, signer prcEntity, config *packet.Config) error {
+
+func (e PrcEntity) PRCSignIdentity(identity string, signer PrcEntity, config *packet.Config) error {
 	if signer.PrivateKey == nil {
 		return errors.InvalidArgumentError("signing Entity must have a private key")
 	}
@@ -47,7 +43,7 @@ func (e prcEntity) PRCSignIdentity(identity string, signer prcEntity, config *pa
 }
 
 //PRCSignIdentityLifeTime is same as PRCSignIdentity but with a Lifetime of the signature in seconds
-func (e prcEntity) PRCSignIdentityLifeTime(identity string, signer prcEntity, config *packet.Config, lifeTime uint32) error {
+func (e PrcEntity) PRCSignIdentityLifeTime(identity string, signer PrcEntity, config *packet.Config, lifeTime uint32) error {
 	if signer.PrivateKey == nil {
 		return errors.InvalidArgumentError("signing Entity must have a private key")
 	}
@@ -74,4 +70,8 @@ func (e prcEntity) PRCSignIdentityLifeTime(identity string, signer prcEntity, co
 	}
 	ident.Signatures = append(ident.Signatures, sig)
 	return nil
+}
+
+type PrcEntity struct {
+	*Entity
 }

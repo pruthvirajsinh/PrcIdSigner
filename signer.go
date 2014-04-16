@@ -30,7 +30,7 @@ func SignPubKeyPKS(asciiPub string, asciiPri string, pripwd string, lifeTime uin
 		usrIdstring = uIds.Name
 
 	}
-	var prcPubEnt, prcPriEnt prcEntity
+	var prcPubEnt, prcPriEnt PrcEntity
 	prcPubEnt.Entity = &pubEnt
 	prcPriEnt.Entity = &priEnt
 	//prcPubEnt
