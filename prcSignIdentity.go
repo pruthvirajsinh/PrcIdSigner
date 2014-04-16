@@ -13,7 +13,6 @@ import (
 // necessary.
 // If config is nil, sensible defaults will be used.
 // Note:It is custom implementation based on patch provided to resolve issue no. 7371
-
 func (e PrcEntity) PRCSignIdentity(identity string, signer PrcEntity, config *packet.Config) error {
 	if signer.PrivateKey == nil {
 		return errors.InvalidArgumentError("signing Entity must have a private key")
